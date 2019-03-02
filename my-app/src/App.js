@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import logo from './logo.svg';
 import './App.css'
 import Person from './Person/Person';
+import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
   state = {
@@ -22,15 +23,6 @@ class App extends Component {
     persons.splice(personIndex,1); // removes o9ne element from the array state
     this.setState({persons:persons}); //updated persons state
   }
-  // switchNameHandler = (newName) => {
-  //   console.log("this is switch name handler");
-  //   this.setState({
-  //     persons: [
-  //       {name: "Max", age:21},
-  //       {name: "Manu", age: 31},
-  //       {name: newName, age: 50}]  
-  //   })
-  // }
 
   nameChangeHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex( p => {
@@ -59,7 +51,13 @@ class App extends Component {
       cursor: "pointer",
       borderRadius: "3px",
       color: "white",
-      padding: "10px 15px"
+      padding: "10px 15px",
+
+      ':hover' : {
+        backgroundColor: 'yellow',
+        color: 'black'
+
+      }
     }
 
     let persons = null;
@@ -79,6 +77,10 @@ class App extends Component {
       );
 
       style.backgroundColor = "green";
+      style[':hover'] = {
+        backgroundColor: 'lightblue',
+        color: 'white'
+      }
     }
    
 
@@ -93,16 +95,19 @@ class App extends Component {
     }
 
     return (
-      <div className='App'>
-        <button 
-          style = {style}
-          onClick = {this.togglePersonHandler} > Switch Name</button>
-          <h1>Hi this is my first React App</h1>
-          <p className = {classes.join(' ')}>this is really working</p>
-          {persons}
-      </div>
+      <StyleRoot>
+            <div className='App'>
+                <button 
+                  style = {style}
+                  onClick = {this.togglePersonHandler} > Switch Name</button>
+                  <h1>Hi this is my first React App</h1>
+                  <p className = {classes.join(' ')}>this is really working</p>
+                  {persons}
+            </div>
+      </StyleRoot>
+      
     )
   }
 }
 
-export default App
+export default Radium(App);
