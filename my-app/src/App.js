@@ -32,14 +32,20 @@ class App extends Component {
   //   })
   // }
 
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        {name: "Max", age:21},
-        {name: "Manu", age: 31},
-        {name: event.target.value, age: 50}]  
-    })
+  nameChangeHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex( p => {
+      return p.id===id;
+    });
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons});
   }
+
 
   togglePersonHandler = () => {
     const doesShow = this.state.showPersons;
@@ -55,6 +61,7 @@ class App extends Component {
       color: "white",
       padding: "10px 15px"
     }
+
     let persons = null;
     if(this.state.showPersons){
       persons = (
@@ -64,19 +71,34 @@ class App extends Component {
                     click = {()=>this.deletePersonHandler(index)} 
                     name = {person.name} 
                     age = {person.age}
-                    key= {person.id}/>
+                    key= {person.id}
+                    changed = {(event)=>this.nameChangeHandler(event, person.id)}/>
           })}
             
         </div>
-      )
+      );
+
+      style.backgroundColor = "green";
     }
    
+
+    // let classes = ['red', 'bold'].join(' ');
+    let classes = [];
+    if(this.state.persons.length <= 2){
+      classes.push('red') // ['red']
+    }
+
+    if(this.state.persons.length <=1){
+      classes.push("bold") // ['red','bold']
+    }
+
     return (
       <div className='App'>
         <button 
           style = {style}
           onClick = {this.togglePersonHandler} > Switch Name</button>
           <h1>Hi this is my first React App</h1>
+          <p className = {classes.join(' ')}>this is really working</p>
           {persons}
       </div>
     )

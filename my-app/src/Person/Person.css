@@ -5,3 +5,11 @@
     border: 1px solid #ddd;
     box-shadow: 5px 5px 8px #ddd;
 }
+
+.red{
+    color: red;
+}
+
+.bold{
+    font-weight: bold;
+}
