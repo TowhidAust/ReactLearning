@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import logo from './logo.svg';
 import './App.css'
-import Person from './Person/Person';
+import Person from '../components/Persons/Person';
 import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
