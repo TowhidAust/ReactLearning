@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -42,7 +43,7 @@ class App extends Component {
 
   render() {
     const customStyle = {
-      backgroundColor: 'black',
+      backgroundColor: 'green',
       color: 'white',
       margin: '8px',
       padding: '10px',
@@ -66,12 +67,24 @@ class App extends Component {
           })}
         </div>
       );
+
+      customStyle.backgroundColor = "red";
     }
+
+    let classes = [];
+    if(this.state.persons.length<=2){
+      classes.push('red');
+    }
+    if(this.state.persons.length<=1){
+      classes.push('bold')
+    }
+
 
 
     return (
       <div className="App">
          <h1>This is my first React App</h1>
+         <p className={classes.join(' ')}>This is really working</p>
 
          <button 
          style={customStyle}
@@ -82,4 +95,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);
