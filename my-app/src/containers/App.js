@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import css_classes from './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+import Persons from '../components/Persons/Person';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
@@ -53,53 +53,29 @@ class App extends Component {
     // }
 
     let persons = null;
-    let btnclass = '';
 
 
 
 
 
     if(this.state.showPersons){
-      persons = (
-        <div>
-          {this.state.persons.map((person, index)=>{
-            // key should always be in the outer method
-            // coz thats the element we actually replicate
-            return <ErrorBoundary  key = {person.id}>
-              <Person
-              click={()=>this.deletePersonHandler(index)}
-              name={person.name} 
-              age={person.age} 
-              changed={(event) => this.nameChangedHandler(event, person.id)}
-              />
-            </ErrorBoundary>
-          })}
-        </div>
-      );
-
-      // customStyle.backgroundColor = "red";
-      btnclass = css_classes.Red;
-      
+      persons = <Persons 
+          persons = {this.state.persons}
+          clicked = {this.deletePersonHandler}
+          changed = {this.nameChangedHandler}
+          />
     }
 
-    let classes = [];
-    if(this.state.persons.length<=2){
-      classes.push(css_classes.red);
-    }
-    if(this.state.persons.length<=1){
-      classes.push(css_classes.bold)
-    }
+ 
 
 
 
     return (
         <div className={css_classes.App}>
-          <h1>This is my first React App</h1>
-          <p className={classes.join(' ')}>This is really working</p>
-
-          <button
-          className={btnclass}
-          onClick={this.togglePersonHandler}> SwitchName</button>
+          <Cockpit 
+          showPersons={this.state.showPersons}
+          persons = {this.state.persons}
+          clicked = {this.togglePersonHandler}  />
           {persons}
         </div>
     );
