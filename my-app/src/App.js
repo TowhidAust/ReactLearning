@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import classes1 from './App.css';
+import css_classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 class App extends Component {
 
@@ -41,53 +42,63 @@ class App extends Component {
     }
 
   render() {
-    const customStyle = {
-      backgroundColor: 'green',
-      color: 'white',
-      margin: '8px',
-      padding: '10px',
-      font: 'inherit',
-      border: '1px solid yellow',
-      cursor: 'pointer',
-    }
+    // const customStyle = {
+    //   backgroundColor: 'green',
+    //   color: 'white',
+    //   margin: '8px',
+    //   padding: '10px',
+    //   font: 'inherit',
+    //   border: '1px solid yellow',
+    //   cursor: 'pointer',
+    // }
 
     let persons = null;
+    let btnclass = '';
+
+
+
+
+
     if(this.state.showPersons){
       persons = (
         <div>
           {this.state.persons.map((person, index)=>{
-            return <Person
+            // key should always be in the outer method
+            // coz thats the element we actually replicate
+            return <ErrorBoundary  key = {person.id}>
+              <Person
               click={()=>this.deletePersonHandler(index)}
               name={person.name} 
               age={person.age} 
-              key = {person.id}
               changed={(event) => this.nameChangedHandler(event, person.id)}
               />
+            </ErrorBoundary>
           })}
         </div>
       );
 
-      customStyle.backgroundColor = "red";
+      // customStyle.backgroundColor = "red";
+      btnclass = css_classes.Red;
       
     }
 
     let classes = [];
     if(this.state.persons.length<=2){
-      classes.push('red');
+      classes.push(css_classes.red);
     }
     if(this.state.persons.length<=1){
-      classes.push('bold')
+      classes.push(css_classes.bold)
     }
 
 
 
     return (
-        <div className={classes1.App}>
+        <div className={css_classes.App}>
           <h1>This is my first React App</h1>
           <p className={classes.join(' ')}>This is really working</p>
 
-          <button 
-          style={customStyle}
+          <button
+          className={btnclass}
           onClick={this.togglePersonHandler}> SwitchName</button>
           {persons}
         </div>
